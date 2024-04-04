@@ -1,0 +1,537 @@
+﻿<!DOCTYPE html>
+<html lang="en" style="font-size: 50px;">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>Fortune Tiger</title>
+    <!-- build:css main.css -->
+    <style>
+        body,
+        html {
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            background-color: rgb(75, 71, 71);
+            font-family: BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+        }
+
+        img {
+            width: 100vw;
+            max-width: 900px;
+
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(3900deg);
+            }
+        }
+
+        .cone {
+            opacity: 1;
+            transition: opacity .33s ease;
+            font-family: VanillaExtractRegular, ComicBold, sans-serif;
+            font-weight: bold;
+        }
+
+        .win {
+            -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+            -webkit-animation-name: opacity-flash;
+            animation-name: opacity-flash;
+        }
+
+        @keyframes opacity-flash {
+            0% {
+                opacity: 1;
+            }
+
+            16.667% {
+                opacity: .33;
+            }
+
+            33.333% {
+                opacity: .8;
+            }
+
+            50% {
+                opacity: .33;
+            }
+
+            66.667% {
+                opacity: .8;
+            }
+
+            83.333% {
+                opacity: .33;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .my-image {
+            width: 1.5rem;
+			height: 1.5rem;
+            margin-top: -9.5%;
+			margin-right: auto; 
+			margin-left: 1%; 
+        }
+
+        .getBtn {
+            width: 5.2rem;
+            /* max-width: 900px; */
+
+
+            height: 9.5%;
+          
+            
+            /* background: #009D7F; */
+			background: url('img/xiaz.png') no-repeat;
+			background-size: contain;
+            color: #FFF600;
+            font-size: 24px;
+            font-weight: bold;
+            line-height: 0.95rem;
+            border-radius: 0.1rem;
+            margin-top: 5.1rem;
+            margin-left: 12%;
+        }
+
+        .tips {
+            font-size: 0.28rem;
+            color: #ebe9a7;
+            margin-top: 0.1rem;
+            display: block;
+            font-weight: 400;
+
+        }
+
+        .content {
+            position: relative;
+            background: url('img/9F_mini_base.png') no-repeat;
+            background-size: 100% 100%;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+        }
+
+        .gameBanner {
+            position: relative;
+            background: url('img/MINI_WEB_4.png') no-repeat;
+            background-size: 7.05rem 3.49rem;
+            width: 7.05rem;
+            height: 3.5rem;
+        }
+
+        .spin-wheel {
+            position: absolute;
+            background: url(./img/MINI_WEB_turnplate_2.png) no-repeat;
+            background-position: 100%;
+            background-size: 4.4rem 4.4rem;
+            width: 4.5rem;
+            height: 4.5rem;
+            top: -7.2rem;
+        }
+
+        .spin-wheel2 {
+            position: absolute;
+            background: url(./img/neiq.png) no-repeat;
+            background-position: 50%;
+            background-size: 4.4rem 4.4rem;
+            width: 4.5rem;
+            height: 4.5rem;
+            margin-left: 1.5%;
+        }
+
+        .spin-cover {
+            position: absolute;
+            background: url(./img/MINI_WEB_turnplate_1.png) no-repeat;
+            background-position: 50%;
+            background-size: 4.29rem 4.29rem;
+            width: 4.5rem;
+            height: 4.5rem;
+             margin-top: -0.2px;
+            transform: translate(0px, 0px);
+            transform-origin: 50% 50%;
+        }
+
+        .arrow {
+            position: absolute;
+            background: url(./img/arrow.png) no-repeat;
+            /* background-size: 4.38rem 4.38rem; */
+            background-size: 29% 34%;
+            width: 2.38rem;
+            height: 2.38rem;
+            left: 46%;
+            top: 3.3%;
+        }
+
+        .light1 {
+            position: absolute;
+            background: url(./img/MINI_WEB_turnplate_lihgt_1.png) no-repeat;
+            background-size: 4.35rem 4.35rem;
+            width: 4.5rem;
+            height: 4.5rem;
+            left: 1.5%;  
+            top: 1.5%;
+        }
+
+        .light2 {
+            position: absolute;
+            background: url(./img/MINI_WEB_turnplate_lihgt_2.png) no-repeat;
+            background-size: 4.35rem 4.35rem;
+            width: 4.5rem;
+            height: 4.5rem;
+            left: 1.5%;  
+            top: 1.5%;
+        }
+
+        .spin-btn {
+            position: absolute;
+            background: url(./img/zhong.png) no-repeat;
+            background-size: 1.3rem 1.3rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            top: -5.65rem;
+            margin-left: 5.5%;
+        }
+
+        #spin-panel {
+            position: relative;
+            width: 6.38rem;
+            height: 6.38rem;
+            display: flex;
+            justify-content: center;
+            margin: 0px auto;
+            margin-top: 36%;
+
+        }
+
+        .spin-list {
+            position: absolute;
+            width: 6.38rem;
+            height: 6.38rem;
+
+            --ds: -1.5rem;
+        }
+
+        .text1 {
+            /* color: rgb(255, 229, 125); */
+            color: #FFF5E1;
+            font-size: 0.22rem;
+            font-weight: bold;
+            width: 1.38rem;
+            height: 1.38rem;
+            position: absolute;
+            left: 2.5rem;
+            top: 2.1rem;
+        }
+
+        .text1:nth-child(1) {
+            transform: rotate(-90deg) translate(var(--ds)) rotate(-90deg);
+        }
+
+        .text1:nth-child(2) {
+            transform: rotate(-30deg) translate(var(--ds)) rotate(-90deg);
+        }
+
+        .text1:nth-child(3) {
+            transform: rotate(30deg) translate(var(--ds)) rotate(-90deg);
+        }
+
+        .text1:nth-child(4) {
+            display: none;
+            transform: rotate(90deg) translate(var(--ds)) rotate(-90deg);
+        }
+
+        .text1:nth-child(5) {
+            transform: rotate(150deg) translate(var(--ds)) rotate(-90deg);
+        }
+
+        .text1:nth-child(6) {
+            transform: rotate(210deg) translate(var(--ds)) rotate(-90deg);
+        }
+
+
+        .lion {
+            position: absolute;
+            background: url(./img/hu.png) no-repeat; 
+            /* background-size: 4.38rem 4.38rem; */
+            background-size: 3rem 7.4rem;
+            width: 3rem;
+            height: 7.4rem;
+            margin-left: -4.4rem;
+            top: -90%;
+        }
+
+        .bull {
+            position: absolute;
+            background: url(./img/niu.png) no-repeat; 
+            /* background-size: 4.38rem 4.38rem; */
+            background-size: 3.5rem 8.3rem;
+            width: 3.5rem;
+            height: 8.3rem;
+            margin-left: 60%;  
+            top: -6.9rem;
+        }
+       
+       
+        .coins {
+            position: absolute;
+            background: url(./img/coins.png) no-repeat; 
+            /* background-size: 4.38rem 4.38rem; */
+            background-position: 50%;
+            background-size: 5rem 4.35rem;
+            width: 5rem;
+            height: 4.35rem;
+            margin-left: 6%;  
+            top: -76.5%;
+        }
+
+
+        .clickCover {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popBox {
+            background: url("img/MINI_WEB_base.png") no-repeat;
+            background-size: 7.02rem 7.19rem;
+            width: 7.02rem;
+            height: 7.19rem;
+            display: flex;
+            margin-top: 1.2rem;
+            flex-direction: column;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+        }
+
+        .popTitle {
+            width: 5.57rem;
+            height: 0.47rem;
+            font-size: 0.43rem;
+            font-family: Arial-BoldMT, Arial;
+            font-weight: normal;
+            color: #FFFFFF;
+            line-height: 0.47rem;
+            text-shadow: 0.04rem 0px 0.16rem #060001;
+        }
+
+        .popTips {
+            width: 5.57rem;
+            height: 0.47rem;
+            font-size: 0.4rem;
+            font-weight: normal;
+            color: #FFFFFF;
+            line-height: 0.47rem;
+            text-shadow: 0.04rem 0px 0.16rem #060001;
+
+        }
+
+        .ticket {
+            background: url("img/MINI_WEB_card_BIG.png") no-repeat;
+            background-size: 3.12rem 1.82rem;
+            width: 3.12rem;
+            height: 1.82rem;
+            color: #8B4513;
+            font-size: 1.12rem;
+            font-weight: bold;
+            line-height: 1.82rem;
+            margin-top: 0.38rem;
+        }
+
+        .claimBtn {
+            width: 5.14rem;
+            max-width: 900px;
+
+
+            height: 0.95rem;
+            margin-top: 0.8rem;
+            margin-left: 1.2%;
+            background: #FBC02D;
+            color: #FFF5E1;
+            font-size: 24px;
+            font-weight: bold;
+            line-height: 0.95rem;
+            border-radius: 0.1rem;
+        }
+
+        .alertBox {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.4);
+            width: 100%;
+            height: 100vh;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+    </style>
+    <!-- endbuild -->
+</head>
+
+<body>
+
+
+
+    <div class="content" style="overflow-x: hidden; overflow-y: hidden;">
+       <img class="my-image" src="img/logo.png" alt="">
+        <div class="gameBanner"></div>
+
+        <div id="spin-panel">
+            <div class="spin-wheel" >
+                <div class="spin-wheel2" >
+                    <div class="light1" id="light1"></div>
+                    <div class="light2" id="light2"></div>
+                <div class="spin-cover" id="spin-wheel">
+              
+           
+                <div class="spin-list"> 
+                </div>
+            </div>
+            </div>
+            </div>
+            <div class="spin-btn" id="spin-btn"></div>
+            <div class="coins"></div>
+            <div class="lion"></div>
+            <div class="bull"></div>
+        </div>
+     
+        <div class="arrow"></div>
+    
+        <div class="clickCover" id="clickCoverId">
+            <div class="getBtn"></div>
+
+        </div>
+        <div class="alertBox" id="popBoxId">
+            <div class="popBox">
+                <div class="popTitle">Parabéns ! Você ganhou</div>
+                <div class="popTips">uma recompensa de</div>
+                <div class="ticket" id="ticketId">10</div>
+                <div class="claimBtn" id="claimBtnId">Receber</div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+<!-- build:js main.js -->
+<script>
+    
+
+    var O = null;
+    var T = function (e) {
+        var t = 2e-5 / Math.sqrt(8);
+        return 1 - Math.pow(t, e)
+    }
+
+    var N = function (e, t, n) {
+        for (var r = "anim".concat(Math.round(9999999 * Math.random())), i = 250, o = n, a = "0% { transform: rotate(".concat(e, "deg); } "), u = 0, s = !1, c = 1; c <= i; c++) {
+            var l = T(c / i) * (t - e);
+            a += "".concat(c / i * 100, "% { transform: rotate(").concat(e + l, "deg); } "),
+                !s && Math.abs(l - u) < .025 && (o *= c / i,
+                    s = !0),
+                u = l
+        }
+        return function (e, t) {
+            O || ((O = window.document.createElement("style")).type = "text/css",
+                window.document.head.appendChild(O));
+
+            var n = "@keyframes ".concat(e, " { ").concat(t, " }");
+            O.sheet.insertRule(n, 0)
+            //console.log(n);
+        }(r, a),
+            [o, r, function (r) {
+                var i = Math.max(Math.min(1, r / n), 0);
+                return T(i) * (t - e)
+            }
+            ]
+    }
+
+
+    var light1 = document.getElementById("light1");
+    var light2 = document.getElementById("light2");
+    light1.style.display = "block";
+    light2.style.display = "none";
+    setInterval(() => {
+        light1.style.display = "none";
+        light2.style.display = "block";
+        setTimeout(() => {
+            light1.style.display = "block";
+            light2.style.display = "none";
+        }, 500);
+    }, 1000);
+
+
+    //8s cubic-bezier(.33,1,.68,1) 0s 1 normal none running spin
+    //  var ss = N(0,5000,1008);
+    //  console.log(ss);
+    // // ss[2](ss[1]);
+
+    // //8s linear 0s 1 normal none running anim3345649
+
+    var isSpin = false;
+    var click = document.getElementById('clickCoverId');
+    var element = document.getElementById("spin-wheel");
+    var popBox = document.getElementById("popBoxId");
+    click.addEventListener("click", function () {
+
+        if (isSpin) {
+            return;
+        }
+        isSpin = true;
+        //element.style.animation ="8s linear 0s 1 normal none running "+ss[1]+"";
+        element.style.animation = "6s cubic-bezier(.33,1,.68,1) 0s 1 normal none running spin";
+
+        setTimeout(() => {
+            element.style.transform = 'rotate(' + 3900 + 'deg)';
+            popBox.style.display = "flex";
+            isSpin = false;
+        }, 6000);
+    });
+
+    var claimBtn = document.getElementById('claimBtnId');
+    claimBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+
+        popBox.style.display = "none";
+        element.style.animation = "";
+        element.style.transform = 'rotate(' + 0 + 'deg)';
+        setTimeout(() => {
+
+            var url = window.location.href;
+            var lastSlashIndex = url.lastIndexOf("/");
+            url = url.substring(0, lastSlashIndex+1);
+
+
+          downloadAdjust(code,campaign);
+		  return false;
+        }, 0);
+
+    });
+ 
+    //readyAdjust(code,campaign);
+	
+</script>
+<!-- endbuild -->
+
+</html>
